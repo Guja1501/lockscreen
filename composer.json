@@ -1,0 +1,19 @@
+{
+  "name": "rangoo/lockscreen",
+  "description": "Add Lockscreen in laravel",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Guja Babunashvili",
+      "email": "Guja1501@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "Rangoo\\Lockscreen\\": "./src/"
+    }
+  }
+}

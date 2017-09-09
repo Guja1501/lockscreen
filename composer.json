@@ -29,7 +29,7 @@
   },
   "extra": {
     "laravel": {
-      "providers": "Rangoo\\Lockscreen\\RangooPcdnServiceProvider"
+      "providers": "Rangoo\\Lockscreen\\LockscreenServiceProvider"
     }
   },
   "minimum-stability": "dev",

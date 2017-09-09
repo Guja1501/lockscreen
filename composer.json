@@ -1,19 +1,37 @@
 {
   "name": "rangoo/lockscreen",
   "description": "Add Lockscreen in laravel",
+  "keywords": [
+    "laravel",
+    "lockscreen"
+  ],
   "type": "library",
   "license": "MIT",
+  "homepage": "https://github.com/guja1501/lockscreen",
+  "support": {
+    "issues": "https://github.com/guja1501/lockscreen/issues",
+    "source": "https://github.com/guja1501/lockscreen"
+  },
   "authors": [
     {
       "name": "Guja Babunashvili",
       "email": "Guja1501@gmail.com"
     }
   ],
-  "minimum-stability": "dev",
-  "require": {},
+  "require": {
+    "php": ">=7.0",
+    "laravel/framework": "^5.5"
+  },
   "autoload": {
     "psr-4": {
       "Rangoo\\Lockscreen\\": "./src/"
     }
-  }
+  },
+  "extra": {
+    "laravel": {
+      "providers": "Rangoo\\Lockscreen\\RangooPcdnServiceProvider"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }

@@ -1,12 +1,10 @@
 <?php
 
-namespace Rangoo\Lockscreen\Controllers\Auth;
+namespace Rangoo\Lockscreen\Traits;
 
-use App\Http\Controllers\Controller;
 use Rangoo\Lockscreen\Requests\LockscreenRequest;
 
-class LockscreenController extends Controller
-{
+trait LockscreenMethods {
 	public function lock() {
 		session()->put('lockscreen', 1);
 

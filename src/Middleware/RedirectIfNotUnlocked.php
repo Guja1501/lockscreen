@@ -21,7 +21,7 @@ class RedirectIfNotUnlocked extends Authenticate
 		$this->authenticate($guards);
 
 		if(session()->get('lockscreen', false))
-			return redirect('/lockscreen');
+			return redirect(config('lockscreen.redirects.locked', '/lockscreen'));
 
 		return $next($request);
     }

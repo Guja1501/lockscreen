@@ -6,17 +6,17 @@ use Illuminate\Contracts\Validation\Rule;
 
 class PasswordReconfirm implements Rule
 {
+	private $authorized = null;
 	/**
 	 * Create a new rule instance.
 	 *
 	 * @param array $guards
-	 *
-	 * @throws \Exception
 	 */
     public function __construct(...$guards)
     {
-    	if(auth()->guest())
-    		throw new \Exception('Authentication Error! Request which uses this rule must be under the auth middleware!');
+    	if(auth()->guest()) {
+    		$this->authorized = 'Request which uses PasswordReconfirm rule must be under the auth middleware!';
+		}
     }
 
 	/**
@@ -30,7 +30,7 @@ class PasswordReconfirm implements Rule
 	 */
     public function passes($attribute, $value)
     {
-    	return auth()->validate([
+    	return $this->authorized ?? auth()->validate([
 			'email' => auth()->user()->email,
 			'password' => $value
 		]);
@@ -43,6 +43,6 @@ class PasswordReconfirm implements Rule
      */
     public function message()
     {
-        return trans('auth.failed');
+        return trans('auth.failed','Maybe password is incorrect');
     }
 }

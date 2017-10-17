@@ -31,7 +31,7 @@ trait LockscreenMethods {
 		return view($this->getUnlockFormViewName());
 	}
 
-	public function getUnlockFormViewName() {
+	protected function getUnlockFormViewName() {
 		if(!is_null($this->unlockFormView)) {
 			return $this->unlockFormView;
 		}

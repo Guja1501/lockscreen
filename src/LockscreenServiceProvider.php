@@ -12,7 +12,7 @@ class LockscreenServiceProvider extends ServiceProvider {
 	 * @return void
 	 */
 	public function boot() {
-		//
+		$this->loadRoutes();
 	}
 
 	/**
@@ -40,6 +40,12 @@ class LockscreenServiceProvider extends ServiceProvider {
 
 		$router->aliasMiddleware('locked', Middleware\RedirectIfUnlocked::class);
 		$router->aliasMiddleware('unlocked', Middleware\RedirectIfLocked::class);
+
+		return $this;
+	}
+
+	private function loadRoutes() {
+		$this->loadRoutesFrom(__DIR__ . 'routes/web.php');
 
 		return $this;
 	}

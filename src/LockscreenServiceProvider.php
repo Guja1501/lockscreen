@@ -12,7 +12,8 @@ class LockscreenServiceProvider extends ServiceProvider {
 	 * @return void
 	 */
 	public function boot() {
-		$this->loadRoutes();
+		$this->loadRoutes()
+			->setUpBlade();
 	}
 
 	/**
@@ -48,5 +49,23 @@ class LockscreenServiceProvider extends ServiceProvider {
 		$this->loadRoutesFrom(__DIR__ . 'routes/web.php');
 
 		return $this;
+	}
+
+	private function setUpBlade() {
+		Blade::if('lockscreen', function ($status) {
+			if(gettype($status) === 'string') {
+				$status = $status === 'locked';
+			}
+
+			return $status === session()->get(config('lockscreen.name', 'lockscreen'), false);
+		});
+
+		Blade::if('locked', function () {
+			return session()->get(config('lockscreen.name', 'lockscreen'), false);
+		});
+
+		Blade::if('unlocked', function () {
+			return !session()->get(config('lockscreen.name', 'lockscreen'), false);
+		});
 	}
 }

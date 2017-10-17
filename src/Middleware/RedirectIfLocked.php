@@ -5,7 +5,7 @@ namespace Rangoo\Lockscreen\Middleware;
 use Closure;
 use Illuminate\Auth\Middleware\Authenticate;
 
-class RedirectIfNotUnlocked extends Authenticate
+class RedirectIfLocked extends Authenticate
 {
 	/**
 	 * Handle an incoming request.
@@ -20,8 +20,8 @@ class RedirectIfNotUnlocked extends Authenticate
     {
 		$this->authenticate($guards);
 
-		if(session()->get('lockscreen', false))
-			return redirect(config('lockscreen.redirects.locked', '/lockscreen'));
+		if(session()->get(config('lockscreen.name'), false))
+			return redirect(config('lockscreen.redirect_if_locked', '/lockscreen'));
 
 		return $next($request);
     }

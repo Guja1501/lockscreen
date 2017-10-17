@@ -30,9 +30,6 @@ class PasswordReconfirm implements Rule
 	 */
     public function passes($attribute, $value)
     {
-    	if($attribute !== 'password')
-    		throw new \Exception('Rule must be used on password property');
-
     	return auth()->validate([
 			'email' => auth()->user()->email,
 			'password' => $value

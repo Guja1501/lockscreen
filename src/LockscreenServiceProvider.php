@@ -38,8 +38,8 @@ class LockscreenServiceProvider extends ServiceProvider {
 		/** @var \Illuminate\Routing\Router $router */
 		$router = $this->app['router'];
 
-		$router->aliasMiddleware('auth.locked', Middleware\RedirectIfNotLocked::class);
-		$router->aliasMiddleware('auth.unlocked', Middleware\RedirectIfNotUnlocked::class);
+		$router->aliasMiddleware('locked', Middleware\RedirectIfUnlocked::class);
+		$router->aliasMiddleware('unlocked', Middleware\RedirectIfLocked::class);
 
 		return $this;
 	}

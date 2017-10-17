@@ -5,26 +5,37 @@ namespace Rangoo\Lockscreen\Traits;
 use Rangoo\Lockscreen\Requests\LockscreenRequest;
 
 trait LockscreenMethods {
-	public function lock() {
-		session()->put('lockscreen', 1);
+	private $unlockFormView = null;
 
-		$redirectUrl = '/lockscreen';
+	public function lock() {
+		session()->put(config('lockscreen.name', 'lockscreen'), 1);
+
+		$redirectUrl = config('lockscreen.redirect_if_locked', '/lockscreen');
 
 		if(request()->expectsJson())
 			return response()->json([
 				'locked' => true,
 				'suggestUrl' => $redirectUrl
 			]);
+
 		return redirect($redirectUrl);
 	}
 
 	public function unlock(LockscreenRequest $request) {
-		session()->put('lockscreen', 0);
+		session()->put(config('lockscreen.name', 'lockscreen'), 0);
 
-		return redirect('/');
+		return redirect(config('lockscreen.redirect_if_unlocked'));
 	}
 
 	public function showUnlockForm() {
-		return view('auth.lock');
+		return view($this->getUnlockFormViewName());
+	}
+
+	public function getUnlockFormViewName() {
+		if(!is_null($this->unlockFormView)) {
+			return $this->unlockFormView;
+		}
+
+		return config('lockscreen.unlock_form_view', 'auth.lock');
 	}
 }

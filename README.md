@@ -29,14 +29,84 @@ Both of them means user must be **logged in**.
 
 ### Examples
 
+[Rangoo\Lockscreen\Traits\LockscreenMethods](https://github.com/Guja1501/lockscreen/blob/v1.0.1/src/Traits/LockscreenMethods.php)
+
 ```php
-Route::middleware('auth.unlocked')->group(function(){
-  // Routes goes here
-});
+// Controller
+
+use Illuminate\Routing\Controller;
+use Rangoo\Lockscreen\Traits\LockscreenMethods;
+
+class LockscreenController extends Controller {
+	use LockscreenMethods;
+}
 ```
 
 ```php
+// Routes
+
+// Init routes for lockscreen methods
 Route::get('/lockscreen', 'LockscreenController@lockscreen')->middleware('auth.locked');
+Route::post('/lockscreen', 'LockscreenController@lock')->middleware('auth.unlocked');
+Route::delete('/lockscreen', 'LockscreenController@unlock')->middleware('auth.locked');
+
+// If any guard: 'auth.unlocked:guard1,guard2,guard3'
+Route::middleware('auth.unlocked')->group(function(){
+  // Routes goes here
+  // Where must be logged in and unlocked
+});
+```
+
+***auth.lock blade***
+```blade
+<form action="{{ url('/lockscreen') }}" method="post">
+   {{ csrf_field() }}
+   <h3>{{ auth()->user()->name }}, are you here?</h3>
+   <input type="password" name="password"/>
+   <input type="submit" value="Unlock" />
+</form>
+```
+
+***layout blade***
+
+```blade
+<html>
+  <head>
+    <script>
+      window.Lockscreen = {
+        locked: {{ session()->get('lockscreen', false) }},
+        route: '{{ url('/lockscreen') }}',
+      };
+    </script>
+  </head>
+  <body>
+    
+    <!-- include javascript -->
+  </body>
+</html>
+```
+
+***webpack***
+
+In this example using packages: [SensorAFK](https://github.com/Guja1501/sensor-afk), [axios](https://github.com/axios/axios)
+
+```js
+const SensorAFK = require('sensor-afk');
+const axios = require('axios');
+
+if(!window.Lockscreen.locked){
+  new SensorAFK({
+    callback: () => {
+      axios.post(window.Lockscreen.route)
+        .then(() => {
+          location.reload();
+        })
+        .catch(() => {
+          alert('something went wrong');
+        });
+    }
+  });
+}
 ```
 
 ## Versioning

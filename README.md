@@ -117,6 +117,8 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 * **Guja Babunashvili** - *Initial work* - [Guja1501](https://github.com/Guja1501)
 
+* **Vakho Nakashidze** - [vakhovakho](https://github.com/vakhovakho)
+
 See also the list of [contributors](https://github.com/Guja1501/lockscreen/contributors) who participated in this project.
 
 ## License

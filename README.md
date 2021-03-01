@@ -46,7 +46,7 @@ class LockscreenController extends Controller {
 // Routes
 
 // Init routes for lockscreen methods
-Route::get('/lockscreen', 'LockscreenController@lockscreen')->middleware('auth.locked');
+Route::get('/lockscreen', 'LockscreenController@showUnlockForm')->middleware('auth.locked');
 Route::post('/lockscreen', 'LockscreenController@lock')->middleware('auth.unlocked');
 Route::delete('/lockscreen', 'LockscreenController@unlock')->middleware('auth.locked');
 
@@ -61,6 +61,7 @@ Route::middleware('auth.unlocked')->group(function(){
 ```blade
 <form action="{{ url('/lockscreen') }}" method="post">
    {{ csrf_field() }}
+   <input name="_method" type="hidden" value="DELETE">
    <h3>{{ auth()->user()->name }}, are you here?</h3>
    <input type="password" name="password"/>
    <input type="submit" value="Unlock" />
@@ -74,7 +75,7 @@ Route::middleware('auth.unlocked')->group(function(){
   <head>
     <script>
       window.Lockscreen = {
-        locked: {{ session()->get('lockscreen', false) }},
+        locked: {{ session()->get('lockscreen', 0) }},
         route: '{{ url('/lockscreen') }}',
       };
     </script>
@@ -118,6 +119,10 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 * **Guja Babunashvili** - *Initial work* - [Guja1501](https://github.com/Guja1501)
 
 * **Vakho Nakashidze** - [vakhovakho](https://github.com/vakhovakho)
+
+* **Ricardo Simão** - [rpsimao](https://github.com/rpsimao)
+
+* **Fernando Parada** - [fernandoparada18](https://github.com/fernandoparada18)
 
 See also the list of [contributors](https://github.com/Guja1501/lockscreen/contributors) who participated in this project.
 
